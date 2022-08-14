@@ -20,15 +20,15 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   // console.log(`User Connected: ${socket.id}`);
 
-  socket.on("join_room", (data) => {
-    socket.join(data);
-    gameLib.createGame(data)
+  socket.on("join_room", (gameName) => {
+    socket.join(gameName);
+    gameLib.createGame(gameName)
   });
 
   socket.on("add_idea", (data) => {
-    console.log(data)
     gameLib.addIdea(data.idea, data.room)
-    // socket.to(data.room).emit("receive_ideas", gameLib.getGameState(data.room));
+    const game = gameLib.getGameState(data.room)
+    io.to(data.room).emit("receive_ideas", game);
   });
 
   socket.on("send_client_game", (data) => {

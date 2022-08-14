@@ -19,7 +19,6 @@ function App() {
   function updateGame(){
     socket.emit("send_client_game", {room});
     socket.on("receive_client_game", (gameReceived) => {
-      console.log('receive_client_game', gameReceived)
       setGame(gameReceived)
     });
   }
@@ -28,11 +27,17 @@ function App() {
     socket.emit("add_idea", {room, idea});
   }
 
+  useEffect(() => {
+    socket.on("receive_ideas", (gameReceived) => {
+      setGame(gameReceived)
+    });
+  }, [socket]);
 
   // Tutorial functions
   function joinRoom(){
     if (room !== "") {
       socket.emit("join_room", room);
+      updateGame()
     }
   }
 

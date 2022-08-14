@@ -11,13 +11,24 @@ function createGame(name){
 }
 
 function getGameState(gameName) {
-  const gameState = GAMES.find(game => game.gameName === gameName)
-  return {gameName: gameState.gameName, ideas: gameState.ideas}
+  try {
+    const gameState = GAMES.find(game => game.gameName === gameName)
+    return {gameName: gameState.gameName, ideas: gameState.ideas}
+  }
+  catch(error){
+    console.error('getGameState failed', error)
+  }
 }
 
 function addIdea(idea, gameName) {
-  GAMES.find(game => game.gameName === gameName).ideas.push(idea)
-  GAMES.find(game => game.gameName === gameName).votes[idea] = []
+  try {
+    GAMES.find(game => game.gameName === gameName).ideas.push(idea)
+    GAMES.find(game => game.gameName === gameName).votes[idea] = []
+  }
+  catch(error){
+    console.error('addIdea failed', error.message)
+  }
+
 }
 
 function addVote(gameName, idea, token){
