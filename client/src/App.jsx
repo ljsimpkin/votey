@@ -12,11 +12,29 @@ function App() {
   const [message, setMessage] = useState("");
   const [messageReceived, setMessageReceived] = useState("");
 
-  const joinRoom = () => {
+  // Game States
+  const [game, setGame] = useState({gameName: "", ideas: ["test init", "test init 2"]})
+  const [idea, setIdea] = useState()
+
+  function updateGame(){
+    socket.emit("send_client_game", {room});
+    socket.on("receive_client_game", (gameReceived) => {
+      console.log('receive_client_game', gameReceived)
+      setGame(gameReceived)
+    });
+  }
+
+  function addIdea(){
+    socket.emit("add_idea", {room, idea});
+  }
+
+
+  // Tutorial functions
+  function joinRoom(){
     if (room !== "") {
       socket.emit("join_room", room);
     }
-  };
+  }
 
   const sendMessage = () => {
     socket.emit("send_message", { message, room });
@@ -27,8 +45,24 @@ function App() {
       setMessageReceived(data.message);
     });
   }, [socket]);
+
   return (
     <div className="App">
+
+      <div>
+        {game.ideas.map(idea => <ul>{idea}</ul>)}
+
+        <button onClick={updateGame}> Refresh ideas</button>
+
+        <input
+        placeholder="Idea..."
+        onChange={(event) => {
+          setIdea(event.target.value);
+        }}
+        />
+        <button onClick={addIdea}> Add Idea</button>
+      </div>
+
       <input
         placeholder="Room Number..."
         onChange={(event) => {

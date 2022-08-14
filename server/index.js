@@ -3,6 +3,8 @@ const app = express();
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const gameLib = require('./gameLib.js');
+const { Socket } = require("dgram");
 
 app.use(cors());
 
@@ -16,11 +18,23 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
+  // console.log(`User Connected: ${socket.id}`);
 
   socket.on("join_room", (data) => {
     socket.join(data);
+    gameLib.createGame(data)
   });
+
+  socket.on("add_idea", (data) => {
+    console.log(data)
+    gameLib.addIdea(data.idea, data.room)
+    // socket.to(data.room).emit("receive_ideas", gameLib.getGameState(data.room));
+  });
+
+  socket.on("send_client_game", (data) => {
+    const gameData = gameLib.getGameState(data.room)
+    io.to(socket.id).emit("receive_client_game", gameData);
+  })
 
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("receive_message", data);
