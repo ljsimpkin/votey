@@ -13,7 +13,7 @@ function App() {
   const [messageReceived, setMessageReceived] = useState("");
 
   // Game States
-  const [game, setGame] = useState({gameName: "", ideas: ["test init", "test init 2"]})
+  const [game, setGame] = useState({gameName: "", ideas: [], phase: ""})
   const [idea, setIdea] = useState()
 
   function updateGame(){
@@ -21,6 +21,16 @@ function App() {
     socket.on("receive_client_game", (gameReceived) => {
       setGame(gameReceived)
     });
+  }
+
+  function nextPhase(){
+    socket.emit("update_nextPhase", game.gameName)
+    updateGame()
+  }
+
+  function changePhase(isForward){
+    socket.emit("update_phase", {gameName: game.gameName, isForward: isForward})
+    updateGame()
   }
 
   function addIdea(){
@@ -53,37 +63,41 @@ function App() {
 
   return (
     <div className="App">
+      {!game.gameName && 
+        <>
+          <input
+            placeholder="Room Number..."
+            onChange={(event) => {
+              setRoom(event.target.value);
+            }}
+          />
+          <button onClick={joinRoom}> Join Room</button>
+        </>
+      }
+      {game.gameName && <h3>Room: {room}</h3>}
 
-      <div>
-        {game.ideas.map(idea => <ul>{idea}</ul>)}
+      {game.round === "drafting" && 
+        <div>
+         {game.ideas.map(idea => <ul key={idea}>{idea}</ul>)}
 
-        <button onClick={updateGame}> Refresh ideas</button>
+         {/* <button onClick={updateGame}> Refresh ideas</button> */}
 
-        <input
-        placeholder="Idea..."
-        onChange={(event) => {
-          setIdea(event.target.value);
-        }}
-        />
-        <button onClick={addIdea}> Add Idea</button>
-      </div>
+          <input
+            placeholder="Idea..."
+            onChange={(event) => {
+              setIdea(event.target.value);
+            }}
+          />
+         <button onClick={addIdea}> Add Idea</button>
+        </div>
+      }
+      {game.round === "lobby" && <h1>Lobby</h1>}
+      {game.round === "drafting" && <h1>drafting</h1>}
+      {game.round === "voting" && <h1>Voting</h1>}
+      {game.round === "results" && <h1>results</h1>}
 
-      <input
-        placeholder="Room Number..."
-        onChange={(event) => {
-          setRoom(event.target.value);
-        }}
-      />
-      <button onClick={joinRoom}> Join Room</button>
-      <input
-        placeholder="Message..."
-        onChange={(event) => {
-          setMessage(event.target.value);
-        }}
-      />
-      <button onClick={sendMessage}> Send Message</button>
-      <h1> Message:</h1>
-      {messageReceived}
+      <button onClick={()=>{changePhase(false)}}>Previous</button>
+      <button onClick={nextPhase}>Next</button>
     </div>
   );
 }

@@ -31,6 +31,16 @@ io.on("connection", (socket) => {
     io.to(data.room).emit("receive_ideas", game);
   });
 
+  socket.on("update_nextPhase", (gameName) => {
+    console.log('updating game phase', gameName)
+    gameLib.nextPhase(gameName)
+  })
+
+  socket.on("update_phase", ({ gameName, isForward}) => {
+    console.log('updating game phase', gameName, isForward)
+    gameLib.changePhase(gameName, isForward)
+  })
+
   socket.on("send_client_game", (data) => {
     const gameData = gameLib.getGameState(data.room)
     io.to(socket.id).emit("receive_client_game", gameData);

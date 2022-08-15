@@ -5,7 +5,7 @@ function resetGAMES(){
 }
 
 function createGame(name){
-  const newGame = {gameName: name, ideas: [], votes: {}, round: 'drafting'}
+  const newGame = {gameName: name, ideas: [], votes: {}, round: 'lobby'}
   GAMES.push(newGame)
   return (newGame)
 }
@@ -13,7 +13,7 @@ function createGame(name){
 function getGameState(gameName) {
   try {
     const gameState = GAMES.find(game => game.gameName === gameName)
-    return {gameName: gameState.gameName, ideas: gameState.ideas}
+    return {gameName: gameState.gameName, ideas: gameState.ideas, round: gameState.round}
   }
   catch(error){
     console.error('getGameState failed', error)
@@ -28,7 +28,36 @@ function addIdea(idea, gameName) {
   catch(error){
     console.error('addIdea failed', error.message)
   }
+}
 
+function nextPhase(gameName) {
+  const rounds = ["lobby", "drafting", "voting", "results"]
+  const currentRound = GAMES.find(game => game.gameName === gameName).round
+  const index = rounds.indexOf(currentRound)
+
+  console.log(gameName, currentRound)
+  
+  try {
+    GAMES.find(game => game.gameName === gameName).round = rounds[index % 3 + 1]
+  }
+  catch(error){
+    console.error('nextPhase failed', error.message)
+  }
+}
+
+function changePhase(gameName, isForward) {
+  const rounds = ["lobby", "drafting", "voting", "results"]
+  const currentRound = GAMES.find(game => game.gameName === gameName).round
+  const index = rounds.indexOf(currentRound)
+
+  console.log(gameName, currentRound)
+  
+  try {
+    GAMES.find(game => game.gameName === gameName).round = rounds[index % 3 + (isForward ? 1 : -1)]
+  }
+  catch(error){
+    console.error('nextPhase failed', error.message)
+  }
 }
 
 function addVote(gameName, idea, token){
@@ -47,5 +76,7 @@ module.exports = {
   resetGAMES,
   addIdea,
   addVote,
+  nextPhase,
+  changePhase,
   GAMES,
 }

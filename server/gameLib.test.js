@@ -78,3 +78,5 @@ describe('generateGameName()', ()=> {
 describe('hasPermission(gameName, token)', () => {
   it.todo('validates token has permission to play game')
 })
+
+// add something to a game before joining a room creates a bug
