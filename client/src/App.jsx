@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import { useEffect, useState } from "react";
 
 import Menu from "./Menu"
+import Drafting from "./Drafting"
 
 const socket = io.connect("http://localhost:3001");
 
@@ -31,6 +32,7 @@ function App() {
 
   // Add an idea to the game
   function addIdea(){
+    console.log(room, idea)
     socket.emit("add_idea", {room, idea});
   }
 
@@ -44,32 +46,13 @@ function App() {
 
       {!game.gameName && <Menu state={{setRoom, joinRoom}}/>}
       {game.round === "lobby" && <h1>Lobby</h1>}
-      {game.round === "drafting" && <h1>Drafting</h1>}
+      {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea}}/>}
       {game.round === "voting" && <h1>Voting</h1>}
       {game.round === "results" && <h1>Results</h1>}
 
-
-      {/* {!game.gameName && 
-        <>
-          <input
-            placeholder="Room Number..."
-            onChange={(event) => {
-              setRoom(event.target.value);
-            }}
-          />
-          <button onClick={joinRoom}> Join Room</button>
-        </>
-      }
-      {game.gameName && <h3>Room: {room}</h3>} */}
-
-      {game.round === "drafting" && 
+      {/* {game.round === "drafting" && 
         <div>
-         {game.ideas.map(idea => <ul key={idea}>{idea}</ul>)}
-
-         {/* <button onClick={updateGame}> Refresh ideas</button> */}
-        
-         
-
+         {game.ideas.map(idea => <ul key={idea}>{idea}</ul>)}        
           <input
             placeholder="Idea..."
             onChange={(event) => {
@@ -78,7 +61,7 @@ function App() {
           />
          <button onClick={addIdea}> Add Idea</button>
         </div>
-      }
+      } */}
 
 
       {/* <button onClick={()=>{changePhase(false)}}>Back</button>
