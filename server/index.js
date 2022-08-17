@@ -13,7 +13,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["http://127.0.0.1:5173", "https://ljsimpkin.github.io/votey"],
+    // origin: ["http://127.0.0.1:5173", "https://ljsimpkin.github.io/votey"],
+    origin: "https://ljsimpkin.github.io/votey",
     methods: ["GET", "POST"],
   },
 });
