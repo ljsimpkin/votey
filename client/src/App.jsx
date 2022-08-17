@@ -7,7 +7,7 @@ import Drafting from "./Drafting"
 import Voting from "./Voting"
 import Results from "./Results"
 
-const socket = io.connect("https://votal.herokuapp.com");
+const socket = io.connect("https://votal.herokuapp.com:18895");
 // const socket = io.connect("http://localhost:3001");
 
 function App() {
