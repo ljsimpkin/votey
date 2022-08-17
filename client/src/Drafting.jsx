@@ -1,5 +1,8 @@
+// for generating unique keys
+import { v4 as uuid } from 'uuid';
+
 function Drafting(props) {
-  const {game, uuid, setIdea, addIdea} = props.state
+  const {game, setIdea, addIdea} = props.state
 
   return (
       <>
