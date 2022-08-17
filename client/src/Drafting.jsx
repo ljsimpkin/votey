@@ -1,11 +1,10 @@
 function Drafting(props) {
-  const {game, setIdea, addIdea} = props.state
+  const {game, uuid, setIdea, addIdea} = props.state
 
   return (
-    <div className="App">
       <>
-      <h1>Drafting</h1>
-        {game.ideas.map(idea => <ul key={idea}>{idea}</ul>)}        
+        <h1>Drafting</h1>
+        {game.ideas.map(idea => <ul key={uuid()}>{idea}</ul>)}        
             <input
               placeholder="Idea..."
               onChange={(event) => {
@@ -14,7 +13,6 @@ function Drafting(props) {
             />
           <button onClick={addIdea}> Add Idea</button>
       </>
-    </div>
   );
 }
 

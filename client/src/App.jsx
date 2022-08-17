@@ -1,6 +1,8 @@
 import "./App.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
+// for generating unique keys
+import { v4 as uuid } from 'uuid';
 
 import Menu from "./Menu"
 import Drafting from "./Drafting"
@@ -18,7 +20,6 @@ function App() {
   // Render a new idea when 
   useEffect(() => {
     socket.on("receive_client_game", (gameReceived) => {
-      console.log('recieving client game')
       setGame(gameReceived)
     });
   }, [socket]);
@@ -32,7 +33,6 @@ function App() {
 
   // Add an idea to the game
   function addIdea(){
-    console.log(room, idea)
     socket.emit("add_idea", {room, idea});
   }
 
@@ -46,26 +46,17 @@ function App() {
 
       {!game.gameName && <Menu state={{setRoom, joinRoom}}/>}
       {game.round === "lobby" && <h1>Lobby</h1>}
-      {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea}}/>}
+      {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea, uuid}}/>}
       {game.round === "voting" && <h1>Voting</h1>}
       {game.round === "results" && <h1>Results</h1>}
 
-      {/* {game.round === "drafting" && 
-        <div>
-         {game.ideas.map(idea => <ul key={idea}>{idea}</ul>)}        
-          <input
-            placeholder="Idea..."
-            onChange={(event) => {
-              setIdea(event.target.value);
-            }}
-          />
-         <button onClick={addIdea}> Add Idea</button>
-        </div>
-      } */}
+      {game.round === "voting" && 
+        <>
+          <h1>Voting</h1>
+          {game.ideas.map(idea => <ul key={uuid()}>{idea}</ul>)} 
+        </>
+      }
 
-
-      {/* <button onClick={()=>{changePhase(false)}}>Back</button>
-      <button onClick={nextPhase}>Next</button> */}
 
       <button onClick={()=>{changeRound("back")}}>Back</button>
       <button onClick={()=>{changeRound("next")}}>Next</button>
