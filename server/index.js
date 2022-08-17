@@ -20,10 +20,25 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   // console.log(`User Connected: ${socket.id}`);
 
+  // updates all client gameStates
+  function sendClientGame(gameName){
+    const gameData = gameLib.getGameState(gameName)
+    io.to(gameName).emit("receive_client_game", gameData);
+  }
+
+  // Join a room,  create a game, and then update everyones game
   socket.on("join_room", (gameName) => {
     socket.join(gameName);
     gameLib.createGame(gameName)
+    sendClientGame(gameName)
   });
+
+  // Change game round next and backwards
+  socket.on("change_round", (data) => {
+    const {gameName, direction} = data
+    gameLib.changeRound(gameName, direction)
+    sendClientGame(gameName)
+  })
 
   socket.on("add_idea", (data) => {
     gameLib.addIdea(data.idea, data.room)
@@ -31,24 +46,10 @@ io.on("connection", (socket) => {
     io.to(data.room).emit("receive_ideas", game);
   });
 
-  socket.on("update_nextPhase", (gameName) => {
-    console.log('updating game phase', gameName)
-    gameLib.nextPhase(gameName)
+  socket.on("new_changes", ()=>{
+    console.log('new changes!')
   })
 
-  socket.on("update_phase", ({ gameName, isForward}) => {
-    console.log('updating game phase', gameName, isForward)
-    gameLib.changePhase(gameName, isForward)
-  })
-
-  socket.on("send_client_game", (data) => {
-    const gameData = gameLib.getGameState(data.room)
-    io.to(socket.id).emit("receive_client_game", gameData);
-  })
-
-  socket.on("send_message", (data) => {
-    socket.to(data.room).emit("receive_message", data);
-  });
 });
 
 server.listen(3001, () => {

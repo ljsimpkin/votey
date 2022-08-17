@@ -30,36 +30,6 @@ function addIdea(idea, gameName) {
   }
 }
 
-function nextPhase(gameName) {
-  const rounds = ["lobby", "drafting", "voting", "results"]
-  const currentRound = GAMES.find(game => game.gameName === gameName).round
-  const index = rounds.indexOf(currentRound)
-
-  console.log(gameName, currentRound)
-  
-  try {
-    GAMES.find(game => game.gameName === gameName).round = rounds[index % 3 + 1]
-  }
-  catch(error){
-    console.error('nextPhase failed', error.message)
-  }
-}
-
-function changePhase(gameName, isForward) {
-  const rounds = ["lobby", "drafting", "voting", "results"]
-  const currentRound = GAMES.find(game => game.gameName === gameName).round
-  const index = rounds.indexOf(currentRound)
-
-  console.log(gameName, currentRound)
-  
-  try {
-    GAMES.find(game => game.gameName === gameName).round = rounds[index % 3 + (isForward ? 1 : -1)]
-  }
-  catch(error){
-    console.error('nextPhase failed', error.message)
-  }
-}
-
 function addVote(gameName, idea, token){
   const game = GAMES.find(game => game.gameName === gameName)
   // check to see if token has submitted
@@ -70,13 +40,25 @@ function addVote(gameName, idea, token){
   }
 }
 
+// Changes the game round from lobby to results
+function changeRound(gameName, direction){
+  const rounds = ["lobby", "drafting", "voting", "results"]
+  const currentRound = GAMES.find(game => game.gameName === gameName).round
+  const index = rounds.indexOf(currentRound)
+
+  if ( direction === 'next' && index < rounds.length - 1) {
+    GAMES.find(game => game.gameName === gameName).round = rounds[index + 1]
+  } else if ( direction === 'back' && index > 0) {
+    GAMES.find(game => game.gameName === gameName).round = rounds[index - 1] 
+  }
+}
+
 module.exports = {
   getGameState,
   createGame,
   resetGAMES,
   addIdea,
   addVote,
-  nextPhase,
-  changePhase,
+  changeRound,
   GAMES,
 }
