@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Menu from "./Menu"
 import Drafting from "./Drafting"
 import Voting from "./Voting"
+import Results from "./Results"
 
 const socket = io.connect("http://localhost:3001");
 
@@ -15,11 +16,15 @@ function App() {
   // Game States
   const [game, setGame] = useState({gameName: "", ideas: [], phase: ""})
   const [idea, setIdea] = useState()
+  const [results, setResults] = useState([])
 
   // Render a new idea when 
   useEffect(() => {
     socket.on("receive_client_game", (gameReceived) => {
       setGame(gameReceived)
+    });
+    socket.on("receive_results", (resultsReceived) => {
+      setResults(resultsReceived)
     });
   }, [socket]);
 
@@ -44,6 +49,10 @@ function App() {
     socket.emit("add_vote", {gameName: game.gameName, idea: idea})
   }
 
+  function getResults(){
+    socket.emit("get_results", game.gameName)
+  }
+
   return (
     <div className="App">
 
@@ -51,10 +60,15 @@ function App() {
       {game.round === "lobby" && <h1>Lobby</h1>}
       {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea}}/>}
       {game.round === "voting" && <Voting state={{game, vote}}/>}
-      {game.round === "results" && <h1>Results</h1>}
+      {game.round === "results" && <Results state={{results, getResults}}/>}
 
-      <button onClick={()=>{changeRound("back")}}>Back</button>
-      <button onClick={()=>{changeRound("next")}}>Next</button>
+      {game.gameName && 
+        <>
+          <button onClick={()=>{changeRound("back")}}>Back</button>
+          <button onClick={()=>{changeRound("next")}}>Next</button>
+        </>
+      }
+
     </div>
   );
 }

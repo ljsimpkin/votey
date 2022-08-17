@@ -50,6 +50,13 @@ io.on("connection", (socket) => {
     const {gameName, idea} = data
     gameLib.addVote(gameName, idea, socket.id)
   })
+
+  socket.on("get_results", (gameName) => {
+    const results = gameLib.getResults(gameName)
+    io.to(gameName).emit("receive_results", results);
+  })
+
+  
 });
 
 server.listen(3001, () => {

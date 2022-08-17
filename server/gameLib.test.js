@@ -4,17 +4,17 @@ beforeEach(() => {
 });
 
 describe('createGame(gameName)', () => {
-  it('returns a game object with game name string and ideas array', () => {
-    const expected = {gameName: "newGame", ideas: [], votes: {}, round: 'drafting'}
-    const actual = lib.createGame("newGame")
+  it('returns a game object', () => {
+    const expected = {gameName: "newGame", ideas: [], votes: {}, round: 'lobby'}
+    const actual = lib.createGame("newGame",[])
     expect(expected).toStrictEqual(actual)
   })
   it('adds a new game to the games object', () => {
-    lib.createGame("newGame")
-    console.log('newgames called Liam?', lib.GAMES)
+    let mockGAMES = []
+    lib.createGame("newGame", mockGAMES)
 
-    const expected = [{gameName: "newGame", ideas: [], votes: {}, round: 'drafting'}]
-    const actual = lib.GAMES
+    const expected = [{gameName: "newGame", ideas: [], votes: {}, round: 'lobby'}]
+    const actual = mockGAMES
 
     expect(actual).toHaveLength(1)
     expect(actual).toStrictEqual(expected)
@@ -23,20 +23,24 @@ describe('createGame(gameName)', () => {
 
 describe('getGameState(gameName)', () => {
   it('returns gameState with name and ideas not votes', () => {
-    lib.createGame("newGame")
-    const expected = {gameName: "newGame", ideas: []}
-    const actual = lib.getGameState('newGame')
+    let mockGAMES = []
+    lib.createGame("newGame", mockGAMES)
+
+    const expected = {gameName: "newGame", ideas: [], round: "lobby"}
+    const actual = lib.getGameState('newGame', mockGAMES)
+
     expect(expected).toStrictEqual(actual)
   })
 })
 
 describe('addIdea(idea, gameName)', () => {
   it('adds a new idea to the gameState', () => {
-    lib.createGame('newGame')
-    lib.addIdea('awesomeNewIdea', 'newGame')
+    let mockGAMES = []
+    lib.createGame('newGame', mockGAMES)
+    lib.addIdea('awesomeNewIdea', 'newGame', mockGAMES)
 
-    const expected = {gameName: "newGame", ideas: ['awesomeNewIdea']}
-    const actual = lib.getGameState('newGame')
+    const expected = {gameName: "newGame", ideas: ['awesomeNewIdea'], round: "lobby"}
+    const actual = lib.getGameState('newGame', mockGAMES)
 
     expect(expected).toStrictEqual(actual)
   })
@@ -77,6 +81,29 @@ describe('generateGameName()', ()=> {
 
 describe('hasPermission(gameName, token)', () => {
   it.todo('validates token has permission to play game')
+})
+
+describe("getResults(gameName) returns and object array of ideas and voteNumberTotal ", () => {
+
+
+  it('returns object array with ideas and votes in the correct order', () => {
+
+    const mockGAMES = [{
+      gameName: 'test',
+      ideas: [ 'idea1', 'idea2', 'idea3' ],
+      votes: {
+        idea1: [ 'jPpQz8wkh8LOv9CpAAAL', 'aw-s_WqozXW-o3T_AAAH' ],
+        idea2: [],
+        idea3: [ 'I1cUna9MdRVTp3byAAAJ' ]
+      },
+      round: 'voting'
+    }]
+
+    const expected = [ { idea: "idea1", votes: 2 }, { idea: "idea3", votes:1 }, { idea: "idea2", votes: 0 } ]
+    const actual = lib.getResults('test', mockGAMES)
+
+    expect(expected).toStrictEqual(actual)
+  })
 })
 
 // add something to a game before joining a room creates a bug
