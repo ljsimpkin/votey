@@ -41,6 +41,10 @@ function App() {
     socket.emit('change_round', {gameName: game.gameName, direction: direction})
   }
 
+  function vote(idea){
+    socket.emit("add_vote", {gameName: game.gameName, idea: idea})
+  }
+
   return (
     <div className="App">
 
@@ -53,10 +57,9 @@ function App() {
       {game.round === "voting" && 
         <>
           <h1>Voting</h1>
-          {game.ideas.map(idea => <ul key={uuid()}>{idea}</ul>)} 
+          {game.ideas.map(idea => <button onClick={()=>{vote(idea)}} key={uuid()}>{idea}</button>)} 
         </>
       }
-
 
       <button onClick={()=>{changeRound("back")}}>Back</button>
       <button onClick={()=>{changeRound("next")}}>Next</button>

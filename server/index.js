@@ -44,6 +44,12 @@ io.on("connection", (socket) => {
     const game = gameLib.getGameState(data.room)
     sendClientsGame(data.room)
   });
+
+  // Adds Client vote for an idea
+  socket.on("add_vote", (data) => {
+    const {gameName, idea} = data
+    gameLib.addVote(gameName, idea, socket.id)
+  })
 });
 
 server.listen(3001, () => {
