@@ -5,6 +5,7 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 const gameLib = require('./gameLib.js');
 const { Socket } = require("dgram");
+const port = process.env.PORT || 3001
 
 app.use(cors());
 
@@ -59,6 +60,6 @@ io.on("connection", (socket) => {
   
 });
 
-server.listen(3001, () => {
+server.listen(port, () => {
   console.log("SERVER IS RUNNING");
 });

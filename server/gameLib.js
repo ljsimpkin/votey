@@ -49,21 +49,6 @@ function changeRound(gameName, direction){
   }
 }
 
-// function ascending( a, b ) {
-//   if ( Object.values(a)[0] > Object.values(b)[0] ){
-//     return -1;
-//   }
-//   if ( Object.values(a)[0] < Object.values(b)[0] ){
-//     return 1;
-//   }
-//   // if they are the same randomly shuffle them
-//   if ( Object.values(a)[0] === Object.values(b)[0] ){
-//     return Math.floor(Math.random() * (2 - 0) + 0) ? 1 : -1;
-//   }
-
-//   return 0;
-// }
-
 function ascending( a, b ) {
   if ( a.votes > b.votes ){
     return -1;
