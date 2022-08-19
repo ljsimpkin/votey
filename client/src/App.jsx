@@ -9,6 +9,7 @@ import Results from "./Results"
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const URL = IS_PROD ? "https://votal.herokuapp.com" : "http://localhost:3001";
+const socket = io.connect(URL);
 console.log('SOCKET URL ===', URL)
 
 socket.on("connect_error", (err) => {
