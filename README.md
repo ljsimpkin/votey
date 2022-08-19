@@ -4,6 +4,9 @@ Started with the help of this tutorial
 
 https://www.youtube.com/watch\?v\=djMy4QsPWiI\&ab_c…
 
+# deploy
+`git push heroku main:main`
+
 # todo
 
 Deploy!! Github pages and Heroku perhaps?
@@ -13,3 +16,4 @@ Combine drafting and voting onto one page
 Identify when your vote is cast
 Display people's names in the lobby
 Have admin privelages
+Only view next arrow if admin

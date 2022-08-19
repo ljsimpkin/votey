@@ -7,8 +7,13 @@ import Drafting from "./Drafting"
 import Voting from "./Voting"
 import Results from "./Results"
 
-const socket = io.connect("https://votal.herokuapp.com:18895");
-// const socket = io.connect("http://localhost:3001");
+const IS_PROD = process.env.NODE_ENV === "production";
+const URL = IS_PROD ? "https://votal.herokuapp.com" : "http://localhost:3001";
+console.log('SOCKET URL ===', URL)
+
+socket.on("connect_error", (err) => {
+  console.log(`connect_error due to ${err.message}`);
+});
 
 function App() {
   //Room State

@@ -4,7 +4,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const gameLib = require('./gameLib.js');
-const { Socket } = require("dgram");
+// const { Socket } = require("dgram");
 const PORT = process.env.PORT || 3001
 
 app.use(cors());
@@ -13,12 +13,14 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["http://127.0.0.1:5173", "https://ljsimpkin.github.io/votey"],
+    origin: ["*","http://127.0.0.1:5173", "http://127.0.0.1:4173", "https://ljsimpkin.github.io/votey"],
     methods: ["GET", "POST"],
   },
 });
 
 io.on("connection", (socket) => {
+  console.log('connection')
+
   // updates all client gameStates
   function sendClientsGame(gameName){
     const gameData = gameLib.getGameState(gameName)
