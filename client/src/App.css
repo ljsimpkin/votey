@@ -38,6 +38,7 @@ body {
   text-align: center;
   border-radius: 15px;
   font-size: 24px;
+  text-transform:uppercase
 }
 
 .joinButton {
@@ -53,4 +54,23 @@ body {
   font-size: 14px;
   position: absolute;
   bottom: 0px;
+}
+
+
+.lobbySubTitle {
+  color: #E3E300;
+  font-size: 24px;
+  margin:0
+}
+.gameCode {
+  color: #E3E300;
+  font-size: 44px;
+  margin:0
+}
+
+.QR {
+  border-radius: 20px;
+  padding:10px;
+  background-color: white;
+  margin-top: 30px;
 }

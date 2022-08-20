@@ -2,6 +2,8 @@ import "./App.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 
+import {QRCodeSVG} from 'qrcode.react'
+
 import Menu from "./Menu"
 import Drafting from "./Drafting"
 import Voting from "./Voting"
@@ -24,9 +26,6 @@ function App() {
   const [game, setGame] = useState({gameName: "", ideas: [], phase: ""})
   const [idea, setIdea] = useState()
   const [results, setResults] = useState([])
-
-  // Error message
-  // const [error, setError] = useState(null)
 
   // Render a new idea when 
   useEffect(() => {
@@ -75,10 +74,23 @@ function App() {
     <div className="App">
 
       {!game.gameName && <Menu state={{setRoom, joinRoom, createGame}}/>}
-      {game.round === "lobby" && <h1>Lobby</h1>}
+      {/* {game.round === "lobby" && <h1>Lobby</h1>} */}
       {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea}}/>}
       {game.round === "voting" && <Voting state={{game, vote}}/>}
       {game.round === "results" && <Results state={{results, getResults}}/>}
+
+      {game.round === "lobby" && 
+      <>
+        <div className="Menu">
+          <h1 className="menuTitle">Lobby</h1>
+          <h3 className="lobbySubTitle"> Game code</h3>
+          <h2 className="gameCode"> {game.gameName} </h2>
+          <div>
+            <QRCodeSVG className="QR" size={250} value={`https://ljsimpkin.github.io/votey/${game.gameName}`} />
+          </div>
+        </div>
+      </>
+      }
 
       {game.gameName && 
         <>

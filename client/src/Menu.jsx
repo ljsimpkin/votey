@@ -10,7 +10,7 @@ function Menu(props) {
         <div className="gameCodeTextBoxDiv">
           <input
               className="gameCodeTextBox"
-              placeholder="Game code"
+              placeholder="Enter Game code"
               onChange={(event) => {
                 setRoom(event.target.value);
               }}
