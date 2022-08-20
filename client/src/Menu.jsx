@@ -12,7 +12,7 @@ function Menu(props) {
               className="gameCodeTextBox"
               placeholder="Enter Game code"
               onChange={(event) => {
-                setRoom(event.target.value);
+                setRoom(event.target.value.toUpperCase());
               }}
             />
         </div>

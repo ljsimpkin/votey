@@ -4,7 +4,6 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const gameLib = require('./gameLib.js');
-// const { Socket } = require("dgram");
 const PORT = process.env.PORT || 3001
 
 app.use(cors());
@@ -19,7 +18,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  // console.log('connection')
+  // console.log(`user ${socket.id} connected`)
 
   // updates all client gameStates
   function sendClientsGame(gameName){
@@ -27,27 +26,29 @@ io.on("connection", (socket) => {
     io.to(gameName).emit("receive_client_game", gameData);
   }
 
+  // sends client error when game can't be found
   function sendClientError(message){
     io.to(socket.id).emit("receive_error_message", message);
   }
 
-  // Join a room,  create a game, and then update everyones game
+  // Creates a new game with a random 4 digit gameName
+    socket.on("create_game", () => {
+      const gameCode = gameLib.generateGameCode(3)
+      const game = gameLib.createGame(gameCode, socket.id)
+      socket.join(gameCode);
+      sendClientsGame(gameCode)
+    });
+
+  // Join a room, create a game, and then update everyones game
   socket.on("join_room", (gameCode) => {
     const game = gameLib.getGameState(gameCode)
     if (game){
       socket.join(gameCode);
-      gameLib.createGame(gameCode)
       sendClientsGame(gameCode)
+    } else {
+      sendClientError('error game not found')
     }
-    sendClientError('error game not found')
-  });
-
-  // Creates a new game with a random 4 digit gameName
-  socket.on("create_game", () => {
-    const gameCode = gameLib.generateGameCode(4)
-    gameLib.createGame(gameCode)
-    socket.join(gameCode);
-    sendClientsGame(gameCode)
+    
   });
 
   // Change game round next and backwards
@@ -59,7 +60,8 @@ io.on("connection", (socket) => {
 
   // Adds an idea to the client's game
   socket.on("add_idea", (data) => {
-    gameLib.addIdea(data.idea, data.room)
+    const {idea, room} = data
+    gameLib.addIdea(idea, room, socket.id)
     const game = gameLib.getGameState(data.room)
     sendClientsGame(data.room)
   });
@@ -75,7 +77,6 @@ io.on("connection", (socket) => {
     io.to(gameName).emit("receive_results", results);
   })
 
-  
 });
 
 server.listen(PORT, () => {

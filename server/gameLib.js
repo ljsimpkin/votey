@@ -1,7 +1,7 @@
 var GAMES = []
 
-function createGame(name, db = GAMES){
-  const newGame = {gameName: name, ideas: [], votes: {}, round: 'lobby'}
+function createGame(name, socketId, db = GAMES){
+  const newGame = {gameName: name, ideas: {}, users: {[socketId]: "notReady"}, round: 'lobby'}
   db.push(newGame)
   return (newGame)
 }
@@ -9,7 +9,7 @@ function createGame(name, db = GAMES){
 // create a alpha numeric game code of length
 function generateGameCode(length) {
   var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   var charactersLength = characters.length;
   for ( var i = 0; i < length; i++ ) {
     result += characters.charAt(Math.floor(Math.random() * 
@@ -18,12 +18,12 @@ charactersLength));
  return result;
 }
 
+// get game state and return null if game does not exist
 function getGameState(gameName, db = GAMES) {
   try {
     const gameState = db.find(game => game.gameName === gameName)
     if (gameState) {
       return {gameName: gameState.gameName, ideas: gameState.ideas, round: gameState.round}
-
     }
     return null
   }
@@ -32,15 +32,28 @@ function getGameState(gameName, db = GAMES) {
   }
 }
 
-function addIdea(idea, gameName, db = GAMES) {
+// add idea and userid to game
+function addIdea(idea, gameName, socketId, db = GAMES) {
   try {
-    db.find(game => game.gameName === gameName).ideas.push(idea)
-    db.find(game => game.gameName === gameName).votes[idea] = []
+    const game = db.find(game => game.gameName === gameName)
+    // console.log('game = ', game, 'game name = ', gameName)
+    db.find(game => game.gameName === gameName).ideas[idea] = [socketId]
   }
   catch(error){
     console.error('addIdea failed', error.message)
   }
 }
+
+
+// function addIdea(idea, gameName, db = GAMES) {
+//   try {
+//     db.find(game => game.gameName === gameName).ideas.push(idea)
+//     db.find(game => game.gameName === gameName).votes[idea] = []
+//   }
+//   catch(error){
+//     console.error('addIdea failed', error.message)
+//   }
+// }
 
 function addVote(gameName, idea, token){
   const game = GAMES.find(game => game.gameName === gameName)

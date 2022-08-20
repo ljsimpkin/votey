@@ -1,9 +1,9 @@
 const lib = require('./gameLib.js');
 
 describe('createGame(gameName)', () => {
-  it('returns a game object', () => {
-    const expected = {gameName: "newGame", ideas: [], votes: {}, round: 'lobby'}
-    const actual = lib.createGame("newGame",[])
+  it.only('returns a game object', () => {
+    const expected = {gameName: "newGame", ideas: {}, users: {socketId:"notReady"}, round: 'lobby'}
+    const actual = lib.createGame("newGame", "socketId",[])
     expect(expected).toStrictEqual(actual)
   })
   it('adds a new game to the games object', () => {
@@ -40,11 +40,10 @@ describe('getGameState(gameName)', () => {
 
 describe('addIdea(idea, gameName)', () => {
   it('adds a new idea to the gameState', () => {
-    let mockGAMES = []
-    lib.createGame('newGame', mockGAMES)
-    lib.addIdea('awesomeNewIdea', 'newGame', mockGAMES)
+    let mockGAMES = [{gameName: "newGame", ideas: {}, round: "lobby"}]
+    lib.addIdea('awesomeNewIdea', 'newGame', 'socketId', mockGAMES)
 
-    const expected = {gameName: "newGame", ideas: ['awesomeNewIdea'], round: "lobby"}
+    const expected = {gameName: "newGame", ideas: {'awesomeNewIdea' : ['socketId']}, round: "lobby"}
     const actual = lib.getGameState('newGame', mockGAMES)
 
     expect(expected).toStrictEqual(actual)

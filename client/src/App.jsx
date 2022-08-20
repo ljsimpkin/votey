@@ -23,7 +23,7 @@ function App() {
   const [room, setRoom] = useState("");
 
   // Game States
-  const [game, setGame] = useState({gameName: "", ideas: [], phase: ""})
+  const [game, setGame] = useState({})
   const [idea, setIdea] = useState()
   const [results, setResults] = useState([])
 
@@ -31,12 +31,12 @@ function App() {
   useEffect(() => {
     socket.on("receive_client_game", (gameReceived) => {
       setGame(gameReceived)
+      setRoom(gameReceived.gameName)
     });
     socket.on("receive_results", (resultsReceived) => {
       setResults(resultsReceived)
     });
     socket.on("receive_error_message", (message) => {
-      console.log(message)
       alert(message)
     })
   }, [socket]);
@@ -47,6 +47,7 @@ function App() {
       socket.emit("join_room", room);
     }
   }
+
   // Creates a new game with a random 4 letter code
   function createGame(){
     socket.emit("create_game")
@@ -88,6 +89,7 @@ function App() {
           <div>
             <QRCodeSVG className="QR" size={250} value={`https://ljsimpkin.github.io/votey/${game.gameName}`} />
           </div>
+          <button onClick={()=>{changeRound("next")}} className="readyButton buttons joinButton">Press me when ready</button>
         </div>
       </>
       }

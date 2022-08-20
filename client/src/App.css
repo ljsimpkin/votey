@@ -3,6 +3,8 @@ body {
   font-family: 'Baloo 2';
 }
 
+/* Menu View */
+
 .Menu {
   display: flex;
   flex-direction: column;
@@ -56,6 +58,7 @@ body {
   bottom: 0px;
 }
 
+/* Lobby View */
 
 .lobbySubTitle {
   color: #E3E300;
@@ -73,4 +76,10 @@ body {
   padding:10px;
   background-color: white;
   margin-top: 30px;
+}
+
+.readyButton {
+  margin-top: 25px;
+  font-size: 17px;
+  padding:10px
 }
