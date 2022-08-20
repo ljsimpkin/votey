@@ -83,3 +83,70 @@ body {
   font-size: 17px;
   padding:10px
 }
+
+/* select and submit */
+
+.gameTitle {
+  color: #E3E3E3;
+  font-size: 45px;
+  text-align: center;
+}
+
+.messageBox {
+  display: flex;
+  flex-direction: row;
+
+  position: fixed;
+  bottom: 0;
+  left: 0px;
+  width: 100%;
+
+  padding:10px;
+  margin:0;
+  background-color: #E95A5A;
+}
+
+.ideaTextBox{
+  border-radius: 20px;
+  width: 80%;
+  font-family:inherit;
+  font-size: 20px;
+  text-align: center;
+  background-color: #D9D9D9;
+}
+
+.submitIdea {
+  font-size: 30px;
+  border-radius: 50%;
+}
+
+.tiles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  column-gap: 20px;
+
+  color: #E95A5A;
+
+}
+
+.tile {
+  width: 100%;
+  background-color: #D9D9D9;
+  color:363636;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 800;
+  padding:10px;
+}
+
+.tileChild {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.hasVoted {
+  background-color: #E3E300;
+}

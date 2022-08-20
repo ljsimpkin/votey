@@ -70,13 +70,25 @@ function App() {
   function getResults(){
     socket.emit("get_results", game.gameName)
   }
+  
+  // Changes the colour of the tile indicating if person has voted or not
+  function hasVoted(idea){
+    return(game.ideas[idea].find(id => id === socket.id) || 0)
+  }
 
   return (
     <div className="App">
 
+      {game.gameName && game.round !== 'lobby' && 
+        <>
+          <button onClick={()=>{changeRound("back")}}>Back</button>
+          {/* <button onClick={()=>{changeRound("next")}}>Next</button> */}
+        </>
+      }
+
       {!game.gameName && <Menu state={{setRoom, joinRoom, createGame}}/>}
       {/* {game.round === "lobby" && <h1>Lobby</h1>} */}
-      {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea}}/>}
+      {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea, vote, hasVoted}}/>}
       {game.round === "voting" && <Voting state={{game, vote}}/>}
       {game.round === "results" && <Results state={{results, getResults}}/>}
 
@@ -94,12 +106,7 @@ function App() {
       </>
       }
 
-      {game.gameName && 
-        <>
-          <button onClick={()=>{changeRound("back")}}>Back</button>
-          <button onClick={()=>{changeRound("next")}}>Next</button>
-        </>
-      }
+ 
 
     </div>
   );

@@ -44,24 +44,16 @@ function addIdea(idea, gameName, socketId, db = GAMES) {
   }
 }
 
-
-// function addIdea(idea, gameName, db = GAMES) {
-//   try {
-//     db.find(game => game.gameName === gameName).ideas.push(idea)
-//     db.find(game => game.gameName === gameName).votes[idea] = []
-//   }
-//   catch(error){
-//     console.error('addIdea failed', error.message)
-//   }
-// }
-
-function addVote(gameName, idea, token){
-  const game = GAMES.find(game => game.gameName === gameName)
-  // check to see if token has submitted
-  if (game.votes[idea].find(tokenElement => tokenElement === token)){
-    console.error("Looks like you have already voted");
+// add vote adds a vote or if already voted toggles your vote off
+function addVote(gameName, idea, token, db = GAMES){
+  const game = db.find(game => game.gameName === gameName)
+  console.log(game)
+  const indexOfId = game.ideas[idea].indexOf(token)
+  // check to see if token has submitted and toggle it off
+  if (indexOfId >= 0){
+    game.ideas[idea].splice(indexOfId)
   } else {
-    game.votes[idea].push(token)
+    game.ideas[idea].push(token)
   }
 }
 

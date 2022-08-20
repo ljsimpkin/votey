@@ -1,7 +1,7 @@
 const lib = require('./gameLib.js');
 
 describe('createGame(gameName)', () => {
-  it.only('returns a game object', () => {
+  it('returns a game object', () => {
     const expected = {gameName: "newGame", ideas: {}, users: {socketId:"notReady"}, round: 'lobby'}
     const actual = lib.createGame("newGame", "socketId",[])
     expect(expected).toStrictEqual(actual)
@@ -55,25 +55,23 @@ describe('addIdea(idea, gameName)', () => {
 
 describe('addVote(gameName, idea, token)', () => {
   it('adds a new vote to gameState', () => {
-    lib.createGame('newGame')
-    lib.addIdea('idea1','newGame')
-    lib.addVote('newGame', 'idea1', 'token1')
+    let mockGAMES = [{gameName: 'newGame', ideas: {idea1: ['id1', 'id2', 'id3']}}]
+    lib.addVote('newGame', 'idea1', 'id4', mockGAMES)
 
-    const expected = {idea1 : ['token1']}
-    const actual = lib.GAMES[0].votes
+    const expected = {idea1: ['id1', 'id2', 'id3', 'id4']}
+    const result = mockGAMES[0].ideas
     
-    expect(expected).toStrictEqual(actual)
+    expect(expected).toStrictEqual(result)
   })
-  it('only adds one vote per user', () => {
-    lib.createGame('newGame')
-    lib.addIdea('idea1','newGame')
-    lib.addVote('newGame', 'idea1', 'token1')
-    lib.addVote('newGame', 'idea1', 'token1')
+  it('toggles a vote thats added thereby only adding one vote per user', () => {
+    let mockGAMES = [{gameName: 'newGame', ideas: {idea1: ['id1', 'id2', 'id3']}}]
+    lib.addVote('newGame', 'idea1', 'id4', mockGAMES)
+    lib.addVote('newGame', 'idea1', 'id4', mockGAMES)
 
-    const expected = {idea1 : ['token1']}
-    const actual = lib.GAMES[0].votes
-
-    expect(expected).toStrictEqual(actual)
+    const expected = {idea1: ['id1', 'id2', 'id3']}
+    const result = mockGAMES[0].ideas
+    
+    expect(expected).toStrictEqual(result)
   })
   it.todo('throws an error when recieved new idea')
   it.todo('does not allow a user to vote on their own idea')

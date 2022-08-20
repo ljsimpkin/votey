@@ -48,7 +48,6 @@ io.on("connection", (socket) => {
     } else {
       sendClientError('error game not found')
     }
-    
   });
 
   // Change game round next and backwards
@@ -70,6 +69,7 @@ io.on("connection", (socket) => {
   socket.on("add_vote", (data) => {
     const {gameName, idea} = data
     gameLib.addVote(gameName, idea, socket.id)
+    sendClientsGame(gameName)
   })
 
   socket.on("get_results", (gameName) => {
