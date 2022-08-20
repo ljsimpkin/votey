@@ -72,11 +72,6 @@ io.on("connection", (socket) => {
     sendClientsGame(gameName)
   })
 
-  socket.on("get_results", (gameName) => {
-    const results = gameLib.getResults(gameName)
-    io.to(gameName).emit("receive_results", results);
-  })
-
 });
 
 server.listen(PORT, () => {

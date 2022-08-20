@@ -2,12 +2,9 @@ import "./App.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 
-import {QRCodeSVG} from 'qrcode.react'
-
 import Menu from "./Menu"
+import Lobby from "./Lobby";
 import Drafting from "./Drafting"
-import Voting from "./Voting"
-import Results from "./Results"
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const URL = IS_PROD ? "https://votal.herokuapp.com" : "http://localhost:3001";
@@ -32,9 +29,6 @@ function App() {
     socket.on("receive_client_game", (gameReceived) => {
       setGame(gameReceived)
       setRoom(gameReceived.gameName)
-    });
-    socket.on("receive_results", (resultsReceived) => {
-      setResults(resultsReceived)
     });
     socket.on("receive_error_message", (message) => {
       alert(message)
@@ -63,12 +57,9 @@ function App() {
     socket.emit('change_round', {gameName: game.gameName, direction: direction})
   }
 
+  // casts your vote!
   function vote(idea){
     socket.emit("add_vote", {gameName: game.gameName, idea: idea})
-  }
-
-  function getResults(){
-    socket.emit("get_results", game.gameName)
   }
   
   // Changes the colour of the tile indicating if person has voted or not
@@ -78,38 +69,15 @@ function App() {
 
   return (
     <div className="App">
-
-      {game.gameName && game.round !== 'lobby' && 
-        <>
-          <button onClick={()=>{changeRound("back")}}>Back</button>
-          {/* <button onClick={()=>{changeRound("next")}}>Next</button> */}
-        </>
-      }
-
       {!game.gameName && <Menu state={{setRoom, joinRoom, createGame}}/>}
-      {/* {game.round === "lobby" && <h1>Lobby</h1>} */}
-      {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea, vote, hasVoted}}/>}
-      {game.round === "voting" && <Voting state={{game, vote}}/>}
-      {game.round === "results" && <Results state={{results, getResults}}/>}
-
-      {game.round === "lobby" && 
-      <>
-        <div className="Menu">
-          <h1 className="menuTitle">Lobby</h1>
-          <h3 className="lobbySubTitle"> Game code</h3>
-          <h2 className="gameCode"> {game.gameName} </h2>
-          <div>
-            <QRCodeSVG className="QR" size={250} value={`https://ljsimpkin.github.io/votey/${game.gameName}`} />
-          </div>
-          <button onClick={()=>{changeRound("next")}} className="readyButton buttons joinButton">Press me when ready</button>
-        </div>
-      </>
-      }
-
- 
-
+      {game.round === "lobby" && <Lobby state={{changeRound, game}} />}
+      {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea, vote, hasVoted, changeRound}}/>}
+    
+      {/* <button onClick={()=>{changeRound("back")}}>Back</button>
+      <button onClick={()=>{changeRound("next")}}>Next</button> */}
     </div>
   );
 }
 
 export default App;
+

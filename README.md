@@ -10,15 +10,18 @@ https://www.youtube.com/watch\?v\=djMy4QsPWiI\&ab_c…
 # features
 
 - [x] Deploy!! Github pages and Heroku perhaps?
-- [ ] Combine drafting and voting onto one page
+- [x] Combine drafting and voting onto one page
 - [ ] Add url to room
-- [ ] Add QR code to lobby
+- [x] Add QR code to lobby
+- [ ] Add enter key submission for form
+- [ ] Move back and forward independently
+- [ ] Order ideas by votes
 
-- [ ] Identify when your vote is cast
+- [x] Identify when your vote is cast
 - [ ] Display people's names in the lobby
 - [ ] Have admin privelages
-- [ ] Only view next arrow if admin
-- [ ] Ready up to move to the next round
+- [o] Only view next arrow if admin
+- [o] Ready up to move to the next round
 
 # Bugs
 

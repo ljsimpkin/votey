@@ -1,21 +1,9 @@
 var GAMES = []
 
 function createGame(name, socketId, db = GAMES){
-  const newGame = {gameName: name, ideas: {}, users: {[socketId]: "notReady"}, round: 'lobby'}
+  const newGame = {gameName: name, ideas: {}, round: 'lobby'}
   db.push(newGame)
   return (newGame)
-}
-
-// create a alpha numeric game code of length
-function generateGameCode(length) {
-  var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-    result += characters.charAt(Math.floor(Math.random() * 
-charactersLength));
- }
- return result;
 }
 
 // get game state and return null if game does not exist
@@ -36,7 +24,6 @@ function getGameState(gameName, db = GAMES) {
 function addIdea(idea, gameName, socketId, db = GAMES) {
   try {
     const game = db.find(game => game.gameName === gameName)
-    // console.log('game = ', game, 'game name = ', gameName)
     db.find(game => game.gameName === gameName).ideas[idea] = [socketId]
   }
   catch(error){
@@ -44,12 +31,11 @@ function addIdea(idea, gameName, socketId, db = GAMES) {
   }
 }
 
-// add vote adds a vote or if already voted toggles your vote off
+// add vote adds a vote or if already voted toggles vote off
 function addVote(gameName, idea, token, db = GAMES){
   const game = db.find(game => game.gameName === gameName)
   console.log(game)
   const indexOfId = game.ideas[idea].indexOf(token)
-  // check to see if token has submitted and toggle it off
   if (indexOfId >= 0){
     game.ideas[idea].splice(indexOfId)
   } else {
@@ -70,6 +56,30 @@ function changeRound(gameName, direction){
   }
 }
 
+module.exports = {
+  getGameState,
+  createGame,
+  addIdea,
+  addVote,
+  changeRound,
+  generateGameCode,
+}
+
+// utils
+
+// create a alpha numeric game code of length
+function generateGameCode(length) {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * 
+charactersLength));
+ }
+ return result;
+}
+
+// use thiis utils function with results.sort(ascending) to sort the votes
 function ascending( a, b ) {
   if ( a.votes > b.votes ){
     return -1;
@@ -83,26 +93,4 @@ function ascending( a, b ) {
   }
 
   return 0;
-}
-
-function getResults(gameName, db = GAMES){
-  const game = db.find(game => game.gameName === gameName)
-  const keys = Object.keys(game.votes)
-  let results = []
-
-  keys.forEach(key => {results.push({idea: key, votes: game.votes[key].length})})
-  results.sort(ascending)
-  
-  return results
-}
-
-module.exports = {
-  getGameState,
-  createGame,
-  addIdea,
-  addVote,
-  changeRound,
-  getResults,
-  generateGameCode,
-  GAMES,
 }

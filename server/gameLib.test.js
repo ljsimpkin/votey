@@ -77,35 +77,4 @@ describe('addVote(gameName, idea, token)', () => {
   it.todo('does not allow a user to vote on their own idea')
 })
 
-describe('generateGameName()', ()=> {
-  it.todo('returns a random 4 character string')
-})
-
-describe('hasPermission(gameName, token)', () => {
-  it.todo('validates token has permission to play game')
-})
-
-describe("getResults(gameName) returns and object array of ideas and voteNumberTotal ", () => {
-
-
-  it('returns object array with ideas and votes in the correct order', () => {
-
-    const mockGAMES = [{
-      gameName: 'test',
-      ideas: [ 'idea1', 'idea2', 'idea3' ],
-      votes: {
-        idea1: [ 'jPpQz8wkh8LOv9CpAAAL', 'aw-s_WqozXW-o3T_AAAH' ],
-        idea2: [],
-        idea3: [ 'I1cUna9MdRVTp3byAAAJ' ]
-      },
-      round: 'voting'
-    }]
-
-    const expected = [ { idea: "idea1", votes: 2 }, { idea: "idea3", votes:1 }, { idea: "idea2", votes: 0 } ]
-    const actual = lib.getResults('test', mockGAMES)
-
-    expect(expected).toStrictEqual(actual)
-  })
-})
-
 // add something to a game before joining a room creates a bug

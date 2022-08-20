@@ -2,11 +2,12 @@
 import { v4 as uuid } from 'uuid';
 
 function Drafting(props) {
-  const {game, setIdea, addIdea, vote, hasVoted} = props.state
+  const {game, setIdea, addIdea, vote, hasVoted, changeRound} = props.state
   const ideas = Object.keys(game.ideas)
 
   return (
       <>
+      <button onClick={()=>{changeRound("back")}}>Back</button>
       <div>
         <h1 className="gameTitle">Select and Submit</h1>
 
@@ -25,6 +26,7 @@ function Drafting(props) {
               setIdea(event.target.value);
             }}
           />
+  
           <button className="submitIdea" onClick={addIdea}>💡</button>
         </div> 
 
