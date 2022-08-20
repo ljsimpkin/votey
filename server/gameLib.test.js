@@ -28,6 +28,14 @@ describe('getGameState(gameName)', () => {
 
     expect(expected).toStrictEqual(actual)
   })
+  it('returns null if game is not found', () => {
+    let mockGAMES = []
+
+    const expected = null
+    const received = lib.getGameState('noGame', mockGAMES)
+
+    expect(received).toStrictEqual(expected)
+  })
 })
 
 describe('addIdea(idea, gameName)', () => {

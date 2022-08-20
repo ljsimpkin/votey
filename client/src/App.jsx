@@ -25,6 +25,9 @@ function App() {
   const [idea, setIdea] = useState()
   const [results, setResults] = useState([])
 
+  // Error message
+  // const [error, setError] = useState(null)
+
   // Render a new idea when 
   useEffect(() => {
     socket.on("receive_client_game", (gameReceived) => {
@@ -33,6 +36,10 @@ function App() {
     socket.on("receive_results", (resultsReceived) => {
       setResults(resultsReceived)
     });
+    socket.on("receive_error_message", (message) => {
+      console.log(message)
+      alert(message)
+    })
   }, [socket]);
 
   // Join an existing game and then update the game
@@ -40,6 +47,10 @@ function App() {
     if (room !== "") {
       socket.emit("join_room", room);
     }
+  }
+  // Creates a new game with a random 4 letter code
+  function createGame(){
+    socket.emit("create_game")
   }
 
   // Add an idea to the game
@@ -63,7 +74,7 @@ function App() {
   return (
     <div className="App">
 
-      {!game.gameName && <Menu state={{setRoom, joinRoom}}/>}
+      {!game.gameName && <Menu state={{setRoom, joinRoom, createGame}}/>}
       {game.round === "lobby" && <h1>Lobby</h1>}
       {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea}}/>}
       {game.round === "voting" && <Voting state={{game, vote}}/>}

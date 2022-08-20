@@ -6,10 +6,26 @@ function createGame(name, db = GAMES){
   return (newGame)
 }
 
+// create a alpha numeric game code of length
+function generateGameCode(length) {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * 
+charactersLength));
+ }
+ return result;
+}
+
 function getGameState(gameName, db = GAMES) {
   try {
     const gameState = db.find(game => game.gameName === gameName)
-    return {gameName: gameState.gameName, ideas: gameState.ideas, round: gameState.round}
+    if (gameState) {
+      return {gameName: gameState.gameName, ideas: gameState.ideas, round: gameState.round}
+
+    }
+    return null
   }
   catch(error){
     console.error('getGameState failed', error)
@@ -82,5 +98,6 @@ module.exports = {
   addVote,
   changeRound,
   getResults,
+  generateGameCode,
   GAMES,
 }

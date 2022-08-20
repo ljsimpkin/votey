@@ -1,5 +1,5 @@
 function Menu(props) {
-  const {setRoom, joinRoom} = props.state
+  const {setRoom, joinRoom, createGame} = props.state
 
   return (
     <div className="Menu">
@@ -20,7 +20,7 @@ function Menu(props) {
         <button className="buttons joinButton" onClick={joinRoom}>Join</button>
         
         <div className="createButtonDiv">
-          <button className="buttons" >Create</button>
+          <button className="buttons" onClick={createGame}>Create</button>
         </div>
         
 

@@ -19,7 +19,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log('connection')
+  // console.log('connection')
 
   // updates all client gameStates
   function sendClientsGame(gameName){
@@ -27,11 +27,27 @@ io.on("connection", (socket) => {
     io.to(gameName).emit("receive_client_game", gameData);
   }
 
+  function sendClientError(message){
+    io.to(socket.id).emit("receive_error_message", message);
+  }
+
   // Join a room,  create a game, and then update everyones game
-  socket.on("join_room", (gameName) => {
-    socket.join(gameName);
-    gameLib.createGame(gameName)
-    sendClientsGame(gameName)
+  socket.on("join_room", (gameCode) => {
+    const game = gameLib.getGameState(gameCode)
+    if (game){
+      socket.join(gameCode);
+      gameLib.createGame(gameCode)
+      sendClientsGame(gameCode)
+    }
+    sendClientError('error game not found')
+  });
+
+  // Creates a new game with a random 4 digit gameName
+  socket.on("create_game", () => {
+    const gameCode = gameLib.generateGameCode(4)
+    gameLib.createGame(gameCode)
+    socket.join(gameCode);
+    sendClientsGame(gameCode)
   });
 
   // Change game round next and backwards
