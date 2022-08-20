@@ -1,8 +1,5 @@
 const lib = require('./gameLib.js');
 
-beforeEach(() => {
-});
-
 describe('createGame(gameName)', () => {
   it('returns a game object', () => {
     const expected = {gameName: "newGame", ideas: [], votes: {}, round: 'lobby'}
