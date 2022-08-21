@@ -10,14 +10,16 @@ function Drafting(props) {
       <button onClick={()=>{changeRound("back")}}>Back</button>
       <div>
         <h1 className="gameTitle">Select and Submit</h1>
-
-        {ideas.map(idea =>
-          <button onClick={() => {vote(idea)}} className={ hasVoted(idea) ? "tile hasVoted" : "tile"} key={uuid()}>
-            <div className="tileChild">
-              {idea} {game.ideas[idea].length}
-            </div>
-          </button>
-        )}
+        <div className="tiles">
+          {ideas.map(idea =>
+            <button onClick={() => { vote(idea) }} className={ hasVoted(idea) ? "tile hasVoted" : "tile"} key={uuid()}>
+              <div className="tileChild">
+                {idea} {game.ideas[idea].length}
+              </div>
+            </button>
+          )}
+        </div>
+      </div>
             
         <div className='messageBox'>
           <input className='ideaTextBox'
@@ -30,7 +32,6 @@ function Drafting(props) {
           <button className="submitIdea" onClick={addIdea}>💡</button>
         </div> 
 
-        </div>
       </>
   );
 }

@@ -16,6 +16,7 @@ https://www.youtube.com/watch\?v\=djMy4QsPWiI\&ab_c…
 - [ ] Add enter key submission for form
 - [ ] Move back and forward independently
 - [ ] Order ideas by votes
+- [ ] Fix iphone blue fonts
 
 - [x] Identify when your vote is cast
 - [ ] Display people's names in the lobby
