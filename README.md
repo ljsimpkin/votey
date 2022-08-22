@@ -1,7 +1,20 @@
 # votey
 ## A party game voting app
 
-Built to help groups make decisions, this project taught me a lot about about web sockets with socket.io, how to break down projects with spikes and data structures, design using figma, and how to deploy with heroku for the back end and github for the front end.
+Built to help groups make decisions, this project taught me a lot about about web sockets with socket.io, how to break down projects with spikes, data structures, one directional data flow which enables testing, designing using figma, and how to deploy with heroku for the back end and github for the front end.
+
+# Tech stack
+
+- React
+- Vite
+- Socket.io
+- Express
+- Node.js
+- Jest
+- Heroku
+- HTML
+- CSS
+- Javascript
 
 # figma designs
 ![figma 1](./client/public/figma%201.png)
@@ -21,16 +34,20 @@ Built to help groups make decisions, this project taught me a lot about about we
 - [ ] Add enter key submission for form
 - [ ] Move back and forward independently
 - [ ] Order ideas by votes
-- [ ] Fix iphone blue fonts
+- [x] Fix iphone blue fonts
+- [ ] Remove undefined idea entry
+- [ ] Position text to the left and keep votes on the right
 
 - [x] Identify when your vote is cast
-- [ ] Display people's names in the lobby
+- [o] Display people's names in the lobby
 - [ ] Have admin privelages
 - [o] Only view next arrow if admin
 - [o] Ready up to move to the next round
 
+
 # Bugs
 
+- [ ] When creator clicks on their own idea to remove vote, it removes all the votes
 - [ ] 2 people clicking next at the same time move twice. Will be solved with ready up or a one page app.
 - [ ] Double votes when people refresh and rejoin room. Readying up and not allowing new joins after would solve this.
 

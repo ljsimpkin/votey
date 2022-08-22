@@ -12,7 +12,7 @@ function Lobby(props) {
       <div>
         <QRCodeSVG className="QR" size={250} value={`https://ljsimpkin.github.io/votey`} />
       </div>
-      <button onClick={()=>{changeRound("next")}} className="readyButton buttons joinButton">Press me when ready</button>
+      <button onClick={()=>{changeRound("next")}} className="readyButton buttons joinButton">Press here to start</button>
     </div>
   </>
   
