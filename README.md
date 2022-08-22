@@ -3,6 +3,9 @@
 
 Built to help groups make decisions, this project taught me a lot about about web sockets with socket.io, how to break down projects with spikes, data structures, one directional data flow which enables testing, designing using figma, and how to deploy with heroku for the back end and github for the front end.
 
+[**TRY ME!**](https://github.com/ljsimpkin/votey)
+
+
 # Tech stack
 
 - React
@@ -43,7 +46,6 @@ Built to help groups make decisions, this project taught me a lot about about we
 - [ ] Have admin privelages
 - [o] Only view next arrow if admin
 - [o] Ready up to move to the next round
-
 
 # Bugs
 
