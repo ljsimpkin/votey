@@ -3,7 +3,7 @@
 
 Built to help groups make decisions, this project taught me a lot about about web sockets with socket.io, how to break down projects with spikes, data structures, one directional data flow which enables testing, designing using figma, and how to deploy with heroku for the back end and github for the front end.
 
-[**TRY ME!**](https://github.com/ljsimpkin/votey)
+[**TRY ME!**](https://ljsimpkin.github.io/votey/)
 
 
 # Tech stack
