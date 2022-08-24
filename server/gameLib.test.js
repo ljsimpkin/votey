@@ -73,6 +73,15 @@ describe('addVote(gameName, idea, token)', () => {
     
     expect(expected).toStrictEqual(result)
   })
+  it.only('removes only the users vote', () => {
+    let mockGAMES = [{gameName: 'newGame', ideas: {idea1: ['id1', 'id2', 'id3']}}]
+    lib.addVote('newGame', 'idea1', 'id1', mockGAMES)
+    // lib.addVote('newGame', 'idea1', 'id1', mockGAMES)
+
+    const expected = {idea1: ['id2', 'id3']}
+    const received = mockGAMES[0].ideas
+    expect(received).toStrictEqual(expected)
+  })
   it.todo('throws an error when recieved new idea')
   it.todo('does not allow a user to vote on their own idea')
 })

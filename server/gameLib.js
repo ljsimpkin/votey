@@ -34,10 +34,9 @@ function addIdea(idea, gameName, socketId, db = GAMES) {
 // add vote adds a vote or if already voted toggles vote off
 function addVote(gameName, idea, token, db = GAMES){
   const game = db.find(game => game.gameName === gameName)
-  console.log(game)
   const indexOfId = game.ideas[idea].indexOf(token)
   if (indexOfId >= 0){
-    game.ideas[idea].splice(indexOfId)
+    game.ideas[idea].splice(indexOfId,1)
   } else {
     game.ideas[idea].push(token)
   }
