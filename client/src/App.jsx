@@ -8,7 +8,7 @@ import Drafting from "./Drafting"
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const URL = IS_PROD ? "https://votal.herokuapp.com" : "http://localhost:3001";
-const socket = io.connect(URL);
+const socket = io.connect(URL, { transports : ['websocket'] });
 console.log('SOCKET URL ===', URL)
 
 socket.on("connect_error", (err) => {

@@ -30,26 +30,27 @@ Built to help groups make decisions, this project taught me a lot about about we
 
 # features
 
-- [x] Deploy!! Github pages and Heroku perhaps?
-- [x] Combine drafting and voting onto one page
+- [ ] Order ideas by votes
+- [ ] Remove undefined idea entry
 - [ ] Add url to room
-- [x] Add QR code to lobby
+- [ ] Position text to the left and keep votes on the right
 - [ ] Add enter key submission for form
 - [ ] Move back and forward independently
-- [ ] Order ideas by votes
+- [ ] Clear text box with enter
+- [x] Deploy!! Github pages and Heroku perhaps?
+- [x] Combine drafting and voting onto one page
+- [x] Add QR code to lobby
 - [x] Fix iphone blue fonts
-- [ ] Remove undefined idea entry
-- [ ] Position text to the left and keep votes on the right
-
 - [x] Identify when your vote is cast
+
 - [o] Display people's names in the lobby
-- [ ] Have admin privelages
 - [o] Only view next arrow if admin
 - [o] Ready up to move to the next round
+- [o] Have admin privelages
 
 # Bugs
 
-- [ ] When creator clicks on their own idea to remove vote, it removes all the votes
+- [x] When creator clicks on their own idea to remove vote, it removes all the votes
 - [ ] 2 people clicking next at the same time move twice. Will be solved with ready up or a one page app.
 - [ ] Double votes when people refresh and rejoin room. Readying up and not allowing new joins after would solve this.
 

@@ -73,17 +73,32 @@ describe('addVote(gameName, idea, token)', () => {
     
     expect(expected).toStrictEqual(result)
   })
-  it.only('removes only the users vote', () => {
+  it('removes only the users vote', () => {
     let mockGAMES = [{gameName: 'newGame', ideas: {idea1: ['id1', 'id2', 'id3']}}]
     lib.addVote('newGame', 'idea1', 'id1', mockGAMES)
-    // lib.addVote('newGame', 'idea1', 'id1', mockGAMES)
 
     const expected = {idea1: ['id2', 'id3']}
     const received = mockGAMES[0].ideas
     expect(received).toStrictEqual(expected)
   })
-  it.todo('throws an error when recieved new idea')
-  it.todo('does not allow a user to vote on their own idea')
+  it.only('returns ideas ordered by highest number of votes', () => {
+    let mockGAMES = [{gameName: 'newGame', ideas: {idea1: ['id1', 'id2'], idea2: ['id1', 'id2', 'id3'], idea3: ['id1']}}]
+    lib.addVote('newGame', 'idea1', 'id1', mockGAMES)
+
+    const expected = {idea2: ['id1', 'id2', 'id3'], idea1: ['id1', 'id2'], idea3: ['id1']}
+    const received = mockGAMES[0].ideas
+    console.log(received)
+    expect(received).toStrictEqual(expected)
+  })
+  it.todo('does not add undefined')
 })
 
-// add something to a game before joining a room creates a bug
+describe('sortObj(ideas) sorts by number of votes', () => {
+  it.only('returns sorted object of votes', () => {
+    let object = {idea1: ['id1', 'id2'], idea2: ['id1', 'id2', 'id3'], idea3: ['id1']}
+
+    const expected = {idea2: ['id1', 'id2', 'id3'], idea1: ['id1', 'id2'], idea3: ['id1']}
+    const received = lib.sortObject(object)
+    expect(received).toStrictEqual(expected)
+  })
+} )
