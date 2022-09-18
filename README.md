@@ -31,8 +31,8 @@ Built to help groups make decisions, this project taught me a lot about about we
 # features
 
 - [ ] Order ideas by votes
-- [ ] Remove undefined idea entry
 - [ ] Add url to room
+- [ ] Remove undefined idea entry
 - [ ] Position text to the left and keep votes on the right
 - [ ] Add enter key submission for form
 - [ ] Move back and forward independently

@@ -151,3 +151,19 @@ body {
 .hasVoted {
   background-color: #E3E300;
 }
+
+/* IdeaTile */
+
+.ideaTile {
+  display:flex; 
+  flex-direction:row-reverse;
+  color: red;
+}
+
+.idea {
+
+}
+
+.vote {
+
+}

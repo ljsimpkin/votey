@@ -1,5 +1,6 @@
 // for generating unique keys
 import { v4 as uuid } from 'uuid';
+import IdeaTile from './IdeaTile';
 
 function Drafting(props) {
   const {game, setIdea, addIdea, vote, hasVoted, changeRound} = props.state
@@ -14,7 +15,7 @@ function Drafting(props) {
           {ideas.map(idea =>
             <button onClick={() => { vote(idea) }} className={ hasVoted(idea) ? "tile hasVoted" : "tile"} key={uuid()}>
               <div className="tileChild">
-                {idea} {game.ideas[idea].length}
+                <IdeaTile state={{idea, game}}/>
               </div>
             </button>
           )}
