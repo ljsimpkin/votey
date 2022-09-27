@@ -20,17 +20,15 @@ function Drafting(props) {
         </div>
       </div>
             
-        <div className='messageBox'>
-          <input className='ideaTextBox'
-            placeholder="Enter your awesome idea here..."
-            onChange={(event) => {
-              setIdea(event.target.value);
-            }}
-          />
-  
-          <button className="submitIdea" onClick={addIdea}>💡</button>
-        </div> 
-
+      <form className='messageBox' onSubmit={addIdea}>
+        <input className='ideaTextBox'
+          placeholder="Enter your awesome idea here..."
+          onChange={(event) => {
+            setIdea(event.target.value);
+          }}
+        />
+        <button type="submit" className="submitIdea" >💡</button>
+      </form>
       </>
   );
 }

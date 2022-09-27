@@ -133,10 +133,12 @@ body {
   margin-right: 20px;
 }
 
+/* IdeaTile */
+
 .tiles {
   display: flex; /*added*/
   flex-direction: column; /*added*/
-  margin-bottom:70px;
+  margin-bottom: 70px;
 }
 
 .tile {
@@ -150,23 +152,14 @@ body {
   padding:10px;
 }
 
-.tileChild {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-
 .hasVoted {
   background-color: #E3E300;
 }
 
-/* IdeaTile */
-
 .ideaTile {
   display: flex; 
   flex-direction: row;
-  color: red;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .idea {

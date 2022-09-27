@@ -48,7 +48,8 @@ function App() {
   }
 
   // Add an idea to the game
-  function addIdea(){
+  function addIdea(e){
+    e.preventDefault();
     socket.emit("add_idea", {room, idea});
   }
 
