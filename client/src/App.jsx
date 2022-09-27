@@ -68,7 +68,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div>
       {!game.gameName && <Menu state={{setRoom, joinRoom, createGame}}/>}
       {game.round === "lobby" && <Lobby state={{changeRound, game}} />}
       {game.round === "drafting" && <Drafting state={{game, setIdea, addIdea, vote, hasVoted, changeRound}}/>}
