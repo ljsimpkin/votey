@@ -155,15 +155,16 @@ body {
 /* IdeaTile */
 
 .ideaTile {
-  display:flex; 
-  flex-direction:row-reverse;
+  display: flex; 
+  flex-direction: row;
   color: red;
+  justify-content: space-between
 }
 
 .idea {
-
+  color: rgb(54, 54, 54);
 }
 
 .vote {
-
+  color:rgb(54, 54, 54);
 }

@@ -14,9 +14,7 @@ function Drafting(props) {
         <div className="tiles">
           {ideas.map(idea =>
             <button onClick={() => { vote(idea) }} className={ hasVoted(idea) ? "tile hasVoted" : "tile"} key={uuid()}>
-              <div className="tileChild">
                 <IdeaTile state={{idea, game}}/>
-              </div>
             </button>
           )}
         </div>
