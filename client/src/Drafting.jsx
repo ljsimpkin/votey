@@ -8,7 +8,7 @@ function Drafting(props) {
 
   return (
       <>
-      <button onClick={()=>{changeRound("back")}}>Back</button>
+      <button onClick={()=>{changeRound("back")}}>QR CODE</button>
       <div>
         <h1 className="gameTitle">Select and Submit</h1>
         <div className="tiles">
@@ -21,7 +21,7 @@ function Drafting(props) {
       </div>
             
       <form className='messageBox' onSubmit={addIdea}>
-        <input className='ideaTextBox'
+        <input id="messageBox" className='ideaTextBox'
           placeholder="Enter your awesome idea here..."
           onChange={(event) => {
             setIdea(event.target.value);

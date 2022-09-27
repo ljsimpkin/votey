@@ -32,11 +32,11 @@ Built to help groups make decisions, this project taught me a lot about about we
 
 - [ ] Order ideas by votes
 - [ ] Add url to room
-- [ ] Remove undefined idea entry
-- [ ] Position text to the left and keep votes on the right
-- [ ] Add enter key submission for form
 - [ ] Move back and forward independently
-- [ ] Clear text box with enter
+- [x] Remove undefined idea entry
+- [x] Clear text box with enter
+- [x] Position text to the left and keep votes on the right
+- [x] Add enter key submission for form
 - [x] Deploy!! Github pages and Heroku perhaps?
 - [x] Combine drafting and voting onto one page
 - [x] Add QR code to lobby

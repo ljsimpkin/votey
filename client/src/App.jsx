@@ -51,6 +51,7 @@ function App() {
   function addIdea(e){
     e.preventDefault();
     socket.emit("add_idea", {room, idea});
+    document.getElementById('messageBox').value = ''
   }
 
   // changes the game round forward or back
