@@ -33,6 +33,8 @@ Built to help groups make decisions, this project taught me a lot about about we
 - [ ] Order ideas by votes
 - [ ] Add url to room
 - [ ] Move back and forward independently
+- [ ] Allign form buttons on home page
+- [ ] Serve locally from the phone
 - [x] Remove undefined idea entry
 - [x] Clear text box with enter
 - [x] Position text to the left and keep votes on the right
