@@ -3,8 +3,8 @@ function IdeaTile(props) {
 
   return (
     <div className="ideaTile">
-      <div className="idea">{idea} </div>
-      <div className="vote">{game.ideas[idea].length}</div>
+      <div className="idea">{idea[0]} </div>
+      <div className="vote">{game.ideas[idea[0]].length}</div>
     </div>
   );
 }

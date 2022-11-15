@@ -4,7 +4,22 @@ import IdeaTile from './IdeaTile';
 
 function Drafting(props) {
   const {game, setIdea, addIdea, vote, hasVoted, changeRound} = props.state
-  const ideas = Object.keys(game.ideas)
+
+  function compare( a, b ) {
+    if ( a[1].length > b[1].length ){
+      return -1;
+    }
+    if ( a[1].length < b[1].length ){
+      return 1;
+    }
+    return 0;
+  }
+
+  var items = Object.keys(game.ideas).map(function(key) {
+    return [key, game.ideas[key]];
+  });
+
+  items.sort(compare);
 
   return (
       <>
@@ -12,9 +27,9 @@ function Drafting(props) {
       <div>
         <h1 className="gameTitle">Select and Submit</h1>
         <div className="tiles">
-          {ideas.map(idea =>
-            <button onClick={() => { vote(idea) }} className={ hasVoted(idea) ? "tile hasVoted" : "tile"} key={uuid()}>
-                <IdeaTile state={{idea, game}}/>
+          {items.map(idea =>
+            <button onClick={() => { vote(idea[0]) }} className={ hasVoted(idea[0]) ? "tile hasVoted" : "tile"} key={uuid()}>
+                <IdeaTile state={{ idea, game }}/>
             </button>
           )}
         </div>
